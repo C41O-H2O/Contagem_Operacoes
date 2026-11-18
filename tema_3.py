@@ -13,16 +13,13 @@ Operação contada: diferenças calculadas (e, na esperta, as comparações da
 ordenação, contadas à parte).
 
 Uso:  python tema_3.py
-      (roda os testes de correção, imprime as tabelas e grava medicoes_tema3.csv)
+(roda os testes de correção, imprime as tabelas e grava medicoes_tema3.csv)
 """
 from functools import lru_cache
 import itertools
 import math
 import random
-<<<<<<< HEAD
 import sys
-=======
->>>>>>> fc14597c3604dde89f334fea04267c5708fa26c6
 from trabalho_base import (
     mergesort,
     aleatorio,
@@ -352,7 +349,6 @@ def confronto(tamanhos=(100, 1024, 1600, 12_500)):
         print()
 
 
-<<<<<<< HEAD
 # =================================================================
 # 5. Extra e funções misteriosas
 # =================================================================
@@ -394,9 +390,6 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--demo":
         demo_ao_vivo()
         return
-=======
-def main():
->>>>>>> fc14597c3604dde89f334fea04267c5708fa26c6
     dados = []
     testar_ingenua()
     testar_esperta()
@@ -404,11 +397,8 @@ def main():
     medir_tudo(dados)
     testar_contagens()
     confronto()
-<<<<<<< HEAD
     demo_pontos_2d()
     rodar_misteriosas(dados)
-=======
->>>>>>> fc14597c3604dde89f334fea04267c5708fa26c6
     salvar_csv(dados, "medicoes_tema3.csv")
 
 
