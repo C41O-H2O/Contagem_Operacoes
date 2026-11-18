@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Trabalho Prático — Contagem de Operações
 ## Tema 3 — As duas notas mais próximas
 
@@ -33,6 +34,11 @@ INGÊNUA(v)                                   ESPERTA(v)
 A ingênua não tem parada antecipada: ela precisa olhar todos os pares porque só no fim sabe
 qual é o menor. A esperta troca "olhar todos os pares" por "ordenar e olhar `n − 1` vizinhos";
 a prova de que isso basta está na seção (iv).
+=======
+# Relatório — Tema 3 (rascunho: contagem à mão)
+
+> Seções iii e iv. As demais seções (i, ii, v a ix) entram na versão final.
+>>>>>>> fc14597c3604dde89f334fea04267c5708fa26c6
 
 ## (iii) Contagem à mão
 
@@ -91,6 +97,7 @@ Repetindo o argumento, existe sempre um par de vizinhos ótimo. Se vale a iguald
 `a_j = a_{i+1}`: os dois pares têm os mesmos valores, o que justifica também a regra de
 desempate. ∎
 
+<<<<<<< HEAD
 ## (v) Teste do dobro: tabelas e razão que estabiliza
 
 Tabelas completas na saída de `python tema_3.py` e no CSV. Resumo (n = 100 → 1 600; série
@@ -201,3 +208,5 @@ Foi usada a IA generativa **Claude (Anthropic)** como apoio:
 - KNUTH, D. E. *The Art of Computer Programming*, vol. 3: *Sorting and Searching* (número de
   comparações do mergesort).
 - Documentação do Python 3 (`random`, `functools`, `itertools`).
+=======
+>>>>>>> fc14597c3604dde89f334fea04267c5708fa26c6
