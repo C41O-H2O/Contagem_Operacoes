@@ -17,6 +17,9 @@ Uso:  python tema_3.py
 """
 import itertools
 import random
+from trabalho_base import (
+    mergesort,
+)
 
 SEMENTE = 42  # semente fixa e registrada (roteiro do experimento, item 4)
 
@@ -94,8 +97,54 @@ def testar_ingenua():
     print(f"[ok] ingênua: {len(casos)} entradas conferidas com o oráculo")
 
 
+# =================================================================
+# 2. Versão esperta — ordena e compara apenas vizinhos
+# =================================================================
+def esperta_fases(v):
+    """Ordena com o mergesort da base e varre os vizinhos.
+
+    Devolve (resultado, comparações_da_ordenação, diferenças_da_varredura),
+    para contar cada fase à parte (roteiro do experimento, item 3).
+    """
+    ordenada, c_ord = mergesort(v)
+    n = len(ordenada)
+    if n < 2:
+        return None, c_ord, 0
+    melhor_d = float("inf")
+    melhor_par = None
+    c_var = 0
+    for i in range(n - 1):
+        c_var += 1                              # ← diferença calculada
+        d = ordenada[i + 1] - ordenada[i]
+        if d < melhor_d:                        # '<' estrito: fica o 1º (menor lo)
+            melhor_d = d
+            melhor_par = (ordenada[i], ordenada[i + 1])
+    return (melhor_par, melhor_d), c_ord, c_var
+
+
+def esperta(v):
+    """Mesma convenção da base: (resultado, contagem total = ordenação + varredura)."""
+    resultado, c_ord, c_var = esperta_fases(v)
+    return resultado, c_ord + c_var
+
+
+def testar_esperta():
+    casos = listas_de_teste()
+    for v in casos:
+        copia = list(v)
+        resultado, c_ord, c_var = esperta_fases(v)
+        assert resultado == oraculo(v), (v, resultado)
+        assert resultado == ingenua(v)[0], (v, "ingênua e esperta discordam")
+        assert v == copia, "a entrada foi alterada"
+        assert c_ord == mergesort(v)[1]
+        assert c_var == max(len(v) - 1, 0), (v, c_var)
+        assert esperta(v)[1] == c_ord + c_var
+    print(f"[ok] esperta: {len(casos)} entradas; concorda com a ingênua e com o oráculo")
+
+
 def main():
     testar_ingenua()
+    testar_esperta()
 
 
 if __name__ == "__main__":

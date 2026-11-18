@@ -15,4 +15,5 @@ fornecida pelo professor e **não deve ser alterado**.
 
 ## Estado atual
 
-Em construção: versão ingênua e testes de correção prontos.
+Em construção: versões ingênua e esperta prontas, com testes de correção.
+Faltam as medições (teste do dobro) e a contagem à mão.
