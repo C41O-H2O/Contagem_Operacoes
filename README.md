@@ -4,16 +4,24 @@ Trabalho Prático de Projeto e Análise de Algoritmos (CIESA): contagem de opera
 
 Dada a lista de `n` notas, devolver o par de menor diferença e essa diferença.
 
-## Como rodar
+| Versão | Ideia | Operação contada |
+|---|---|---|
+| `ingenua` | diferença de todos os pares | diferenças calculadas |
+| `esperta` | mergesort + diferença só entre vizinhos | diferenças da varredura + comparações da ordenação (à parte) |
+
+## Como reproduzir tudo
 
 ```bash
 python tema_3.py
 ```
 
-Requer apenas Python 3 (sem dependências). O `trabalho_base.py` é a base comum
-fornecida pelo professor e **não deve ser alterado**.
+Requer apenas Python 3 (sem dependências), leva cerca de 20 s e faz, em ordem:
 
-## Estado atual
+1. testes de correção (1 011 entradas, com casos de borda, contra um oráculo);
+2. tabelas do teste do dobro (ingênua; esperta em melhor, pior e médio caso;
+   cada fase da esperta separada; série maior até n = 100 000);
+3. peso de cada fase e a discussão do melhor caso da ingênua;
+4. grava os dados brutos em `medicoes_tema3.csv` (`versao, n, contagem`).
 
-Em construção: versões ingênua e esperta prontas, com testes de correção.
-Faltam as medições (teste do dobro) e a contagem à mão.
+Sementes: `42` (e `42..71` nas 30 listas do caso médio). O `trabalho_base.py` é a
+base comum do professor e **não deve ser alterado**.
