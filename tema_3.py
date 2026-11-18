@@ -17,6 +17,7 @@ Uso:  python tema_3.py
 """
 from functools import lru_cache
 import itertools
+import math
 import random
 from trabalho_base import (
     mergesort,
@@ -278,12 +279,83 @@ def demo_melhor_caso_ingenua(n=1600):
           f"| {ingenua_com_parada(sem_zero)[1]} (sem par igual)")
 
 
+# =================================================================
+# 4. Contagem à mão (fórmulas) e confronto com a medição
+# =================================================================
+def T_ingenua(n):
+    """Σ_{i=0}^{n-2} (n-1-i) = n(n-1)/2."""
+    return n * (n - 1) // 2
+
+
+def T_varredura(n):
+    """Σ_{i=0}^{n-2} 1 = n-1."""
+    return max(n - 1, 0)
+
+
+def W_ord(n):
+    """Pior caso do mergesort: W(n) = W(⌊n/2⌋) + W(⌈n/2⌉) + n - 1,
+    com solução fechada n·⌈log2 n⌉ − 2^⌈log2 n⌉ + 1."""
+    if n <= 1:
+        return 0
+    k = (n - 1).bit_length()                    # ⌈log2 n⌉
+    return n * k - 2 ** k + 1
+
+
+@lru_cache(maxsize=None)
+def B_ord(n):
+    """Melhor caso (lista ordenada): B(n) = B(⌊n/2⌋) + B(⌈n/2⌉) + ⌊n/2⌋.
+    Para n = 2^k: (n/2)·log2 n."""
+    if n <= 1:
+        return 0
+    return B_ord(n // 2) + B_ord(n - n // 2) + n // 2
+
+
+def M_ord_aprox(n):
+    """Caso médio do mergesort em permutações: ≈ n·log2 n − 1,25·n."""
+    return n * math.log2(n) - 1.25 * n
+
+
+def testar_contagens():
+    for n in range(1, 301):                     # fórmulas × medição, todos os n pequenos
+        assert esperta_fases(pior_caso_mergesort(n))[1] == W_ord(n), n
+        assert esperta_fases(ordenado(n))[1] == B_ord(n), n
+    for n in (12_500, 100_000):
+        assert esperta_fases(pior_caso_mergesort(n))[1] == W_ord(n), n
+    for n in (2, 4, 1024, 4096):
+        assert B_ord(n) == (n // 2) * int(math.log2(n))      # fórmula para n = 2^k
+    for n in TAMANHOS:
+        assert ingenua(distintos(n, SEMENTE))[1] == T_ingenua(n)
+    print("[ok] contagens: as fórmulas coincidem exatamente com as medições")
+
+
+def confronto(tamanhos=(100, 1024, 1600, 12_500)):
+    """Calculado à mão × medido, em pelo menos três valores de n."""
+    print("\nCONFRONTO: contagem à mão × medição")
+    print(f"{'n':>7} {'item':<34} {'à mão':>12} {'medido':>12} {'diferença':>10}")
+    for n in tamanhos:
+        medido_ing = ingenua(distintos(n, SEMENTE))[1] if n <= 1600 else None
+        linhas = [
+            ("ingênua: n(n-1)/2", T_ingenua(n), medido_ing),
+            ("varredura: n-1", T_varredura(n), esperta_fases(ordenado(n))[2]),
+            ("ordenação, pior: n⌈lg n⌉−2^⌈lg n⌉+1", W_ord(n), esperta_fases(pior_caso_mergesort(n))[1]),
+            ("ordenação, melhor: recorrência", B_ord(n), esperta_fases(ordenado(n))[1]),
+            ("ordenação, média: ≈ n lg n − 1,25n", M_ord_aprox(n), media_fases(n)[0]),
+        ]
+        for nome, calc, med in linhas:
+            if med is None:
+                continue
+            print(f"{n:>7} {nome:<34} {calc:>12.1f} {med:>12.1f} {med - calc:>10.1f}")
+        print()
+
+
 def main():
     dados = []
     testar_ingenua()
     testar_esperta()
     testar_casos()
     medir_tudo(dados)
+    testar_contagens()
+    confronto()
     salvar_csv(dados, "medicoes_tema3.csv")
 
 

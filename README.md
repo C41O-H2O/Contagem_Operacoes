@@ -25,3 +25,9 @@ Requer apenas Python 3 (sem dependências), leva cerca de 20 s e faz, em ordem:
 
 Sementes: `42` (e `42..71` nas 30 listas do caso médio). O `trabalho_base.py` é a
 base comum do professor e **não deve ser alterado**.
+
+## Contagem à mão
+
+`tema_3.py` traz as fórmulas (`T_ingenua`, `T_varredura`, `W_ord`, `B_ord`) e a tabela
+**contagem à mão × medição**. A dedução com Σ e log está em `RELATORIO.md`
+(seções iii e iv).
